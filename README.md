@@ -6,6 +6,19 @@ Live deployment: https://spotify-project-bc53.onrender.com
 
 ---
 
+## Architecture Flow
+
+```mermaid
+flowchart TD
+    User["Music Listener"] --> Frontend["React Client + Audio Playback"]
+    Frontend <-->|"REST API (Tracks, Albums, Playlists)"| ExpressAPI["Express API Server"]
+    Frontend <-->|"WebSockets (Real-Time Messaging)"| SocketIO["Socket.io Gateway"]
+    ExpressAPI --> Mongo[("MongoDB Database")]
+    ExpressAPI --> Cloudinary["Cloudinary Audio Streaming CDN"]
+```
+
+---
+
 ## Overview
 
 This application reproduces core music streaming functionalities: continuous audio playback, album and track navigation, user authentication, and real-time social chatting between active users.
