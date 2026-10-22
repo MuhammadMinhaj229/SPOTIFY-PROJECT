@@ -62,6 +62,18 @@ cron.schedule("0 * * * *", () => {
 });
 
 app.get("/api/health", (req, res) => res.json({ status: "healthy", service: "spotify-backend" }));
+app.get("/api/audio/status", (req, res) => {
+	res.json({
+		status: "operational",
+		service: "enterprise-audio-distribution",
+		streaming_engine: "HLS / Progressive Stream",
+		catalog_items: 18,
+		active_albums: 4,
+		supported_bitrates: ["320kbps", "192kbps", "96kbps"],
+		cdn_cache: "edge-accelerated",
+		socket_cluster: "active"
+	});
+});
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);

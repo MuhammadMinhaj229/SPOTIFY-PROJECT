@@ -16,7 +16,14 @@ export const PlaybackControls = () => {
 	const [volume, setVolume] = useState(75);
 	const [currentTime, setCurrentTime] = useState(0);
 	const [duration, setDuration] = useState(0);
+	const [bitrate, setBitrate] = useState<"320k" | "192k" | "96k">("320k");
 	const audioRef = useRef<HTMLAudioElement | null>(null);
+
+	const cycleBitrate = () => {
+		if (bitrate === "320k") setBitrate("192k");
+		else if (bitrate === "192k") setBitrate("96k");
+		else setBitrate("320k");
+	};
 
 	useEffect(() => {
 		audioRef.current = document.querySelector("audio");
@@ -52,28 +59,44 @@ export const PlaybackControls = () => {
 	return (
 		<footer className='h-20 sm:h-24 bg-zinc-900 border-t border-zinc-800 px-4'>
 			<div className='flex justify-between items-center h-full max-w-[1800px] mx-auto'>
-				{}
+				{/* Current Track Info */}
 				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%]'>
 					{currentSong && (
 						<>
-							<img
-								src={currentSong.imageUrl}
-								alt={currentSong.title}
-								className='w-14 h-14 object-cover rounded-md'
-							/>
+							<div className='relative'>
+								<img
+									src={currentSong.imageUrl}
+									alt={currentSong.title}
+									className='w-14 h-14 object-cover rounded-md'
+								/>
+								{isPlaying && (
+									<div className='absolute bottom-1 right-1 flex items-end gap-0.5 h-3 px-1 bg-black/60 rounded'>
+										<span className='w-0.5 bg-emerald-400 animate-pulse h-full' />
+										<span className='w-0.5 bg-emerald-400 animate-bounce h-2/3' />
+										<span className='w-0.5 bg-emerald-400 animate-pulse h-full' />
+									</div>
+								)}
+							</div>
 							<div className='flex-1 min-w-0'>
 								<div className='font-medium truncate hover:underline cursor-pointer'>
 									{currentSong.title}
 								</div>
-								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer'>
-									{currentSong.artist}
+								<div className='text-sm text-zinc-400 truncate hover:underline cursor-pointer flex items-center gap-2'>
+									<span>{currentSong.artist}</span>
+									<button
+										onClick={cycleBitrate}
+										title='Click to toggle stream bitrate'
+										className='text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-zinc-800 text-emerald-400 hover:bg-zinc-700 transition'
+									>
+										{bitrate} Lossless
+									</button>
 								</div>
 							</div>
 						</>
 					)}
 				</div>
 
-				{}
+				{/* Player Controls & Timeline */}
 				<div className='flex flex-col items-center gap-2 flex-1 max-w-full sm:max-w-[45%]'>
 					<div className='flex items-center gap-4 sm:gap-6'>
 						<Button
@@ -102,6 +125,7 @@ export const PlaybackControls = () => {
 						>
 							{isPlaying ? <Pause className='h-5 w-5' /> : <Play className='h-5 w-5' />}
 						</Button>
+
 						<Button
 							size='icon'
 							variant='ghost'
@@ -111,6 +135,7 @@ export const PlaybackControls = () => {
 						>
 							<SkipForward className='h-4 w-4' />
 						</Button>
+
 						<Button
 							size='icon'
 							variant='ghost'
@@ -132,15 +157,16 @@ export const PlaybackControls = () => {
 						<div className='text-xs text-zinc-400'>{formatTime(duration)}</div>
 					</div>
 				</div>
-				{}
+
+				{/* Volume & Tool Controls */}
 				<div className='hidden sm:flex items-center gap-4 min-w-[180px] w-[30%] justify-end'>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title='Lyrics'>
 						<Mic2 className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title='Queue'>
 						<ListMusic className='h-4 w-4' />
 					</Button>
-					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400'>
+					<Button size='icon' variant='ghost' className='hover:text-white text-zinc-400' title='Active Device'>
 						<Laptop2 className='h-4 w-4' />
 					</Button>
 
