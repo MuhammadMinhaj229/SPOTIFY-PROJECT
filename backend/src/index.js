@@ -22,7 +22,7 @@ dotenv.config();
 
 const __dirname = path.resolve();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 const httpServer = createServer(app);
 initializeSocket(httpServer);
@@ -62,6 +62,7 @@ cron.schedule("0 * * * *", () => {
 	}
 });
 
+app.get("/api/health", (req, res) => res.json({ status: "healthy", service: "spotify-backend" }));
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
