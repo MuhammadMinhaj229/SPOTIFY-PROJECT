@@ -9,7 +9,6 @@ import { createServer } from "http";
 import cron from "node-cron";
 
 import { initializeSocket } from "./lib/socket.js";
-
 import { connectDB } from "./lib/db.js";
 import userRoutes from "./routes/user.route.js";
 import adminRoutes from "./routes/admin.route.js";
@@ -29,20 +28,20 @@ initializeSocket(httpServer);
 
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: true,
 		credentials: true,
 	})
 );
 
-app.use(express.json()); 
-app.use(clerkMiddleware()); 
+app.use(express.json());
+app.use(clerkMiddleware());
 app.use(
 	fileUpload({
 		useTempFiles: true,
 		tempFileDir: path.join(__dirname, "tmp"),
 		createParentPath: true,
 		limits: {
-			fileSize: 10 * 1024 * 1024, 
+			fileSize: 10 * 1024 * 1024,
 		},
 	})
 );
