@@ -1,32 +1,85 @@
-# spotiy clone project
+# Spotify Platform
 
-## Live Website
-[View the Live Website](https://spotify-project-bc53.onrender.com)
+Full-stack music streaming web application built with the MERN stack, featuring audio playback, real-time user chat, and playlist management.
 
+Live deployment: https://spotify-project-bc53.onrender.com
 
-**About**
-This is a Spotify-like music streaming app built using a full-stack architecture. It includes a **frontend** client (React/NextJS implied by structure) that communicates with a **backend** 
-API for music data. The app showcases user interface skills and practical knowledge of web development concepts. --- ## Tech Stack - **Frontend:** 
-TypeScript, React/NextJS (inferred), CSS - **Backend:** JavaScript/TypeScript (Node.js or similar) -
-**Deployment:** Render (live link) -
-**Other Tools:** Git, RESTful APIs --- ## **Features** - Browse a music catalog with search functionality - Play music, manipulate the play button, live chatting using socket.io,admin panel for noting the stats and adding music, album and their images,authentication using clerk, cloudinary as a database for storing music and images, mongo db for user details and a part of authenticatioon - Responsive UI for web and mobile views (if applicable) - Modular code structure for easy maintenance --- ## Project Structure 
+---
 
-SPOTIFY–PROJECT/ ├── frontend/ # Frontend application (React/NextJS) ├── backend/ # API server for music data ├── README.md # Project documentation └── package.json # Project dependencies and scripts
+## Overview
 
---- ## Setup & Run Locally 1. **Clone the repository:** ```bash git clone https://github.com/MuhammadMinhaj229/SPOTIFY--PROJECT.git cd SPOTIFY--PROJECT 
+This application reproduces core music streaming functionalities: continuous audio playback, album and track navigation, user authentication, and real-time social chatting between active users.
 
-Run the backend:
+---
 
-cd backend npm install npm start 
+## Architecture and Features
 
-Run the frontend:
+- Continuous audio playback engine with track seek, volume control, and shuffle/repeat modes.
+- Real-time chatting powered by Socket.io, allowing listeners to message each other in real time.
+- Protected authentication routes and user session management with JWT and bcrypt.
+- Admin dashboard for uploading tracks, creating albums, and managing music metadata.
+- Cloudinary integration for cloud audio and album artwork storage.
 
-cd ../frontend npm install npm start 
+---
 
-Access the app: Open your browser and navigate to http://localhost:3000
+## Tech Stack
 
-Challenges & Learning 
+- Frontend: React, Vite, Tailwind CSS, Lucide Icons, Axios
+- Backend: Node.js, Express, MongoDB (Mongoose), Socket.io, Cloudinary
+- Deployment: Render (unified monorepo build)
 
-During development, I worked through:
+---
 
-Handling asynchronous API calls and state management Ensuring UI responsiveness across different screen sizes Structuring modular and maintainable frontend and backend code Future Improvements Add personalized playlists Integrate real music APIs (like Spotify’s) for real-time data Use Docker for easy environment setup Enhance testing with JUnit/Mocha, and improve performance using caching strategies
+## Local Development
+
+Prerequisites: Node.js 18+, MongoDB instance.
+
+```bash
+# 1. Clone repository
+git clone https://github.com/MuhammadMinhaj229/SPOTIFY-PROJECT.git
+cd SPOTIFY-PROJECT
+
+# 2. Install backend dependencies
+cd backend
+npm install
+cp .env.example .env
+
+# 3. Install frontend dependencies
+cd ../frontend
+npm install
+cp .env.example .env
+
+# 4. Run backend server
+cd ../backend
+npm run dev
+
+# 5. Run frontend server (in another terminal)
+cd ../frontend
+npm run dev
+```
+
+---
+
+## How to Deploy to Render
+
+1. Create a new Web Service on Render and link `SPOTIFY-PROJECT`.
+2. Configure build and start commands:
+   - Build Command: `npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend`
+   - Start Command: `npm start --prefix backend`
+3. Add environment variables:
+   - `PORT` = `5000`
+   - `MONGO_URI` = your-mongodb-connection-string
+   - `JWT_SECRET` = your-jwt-secret
+   - `CLOUDINARY_API_KEY` = your-cloudinary-key
+   - `CLOUDINARY_API_SECRET` = your-cloudinary-secret
+   - `CLOUDINARY_CLOUD_NAME` = your-cloud-name
+   - `NODE_ENV` = `production`
+4. Click Deploy.
+
+---
+
+## Author
+
+Mohammed Minhaj Mahmood  
+Portfolio: https://mohammed-minhaj.netlify.app/  
+Email: minhajmuhammad229@gmail.com
